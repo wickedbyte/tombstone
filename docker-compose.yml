@@ -1,0 +1,18 @@
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      target: php
+    volumes:
+      - type: bind
+        source: ./
+        target: /app
+        bind:
+          create_host_path: true
+      - type: bind
+        source: ./settings.ini
+        target: /usr/local/etc/php/conf.d/settings.ini
+      - type: tmpfs
+        target: /tmp
+    user: dev

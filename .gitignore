@@ -1,0 +1,8 @@
+.idea/
+.env
+.phpunit.result.cache
+docker-compose.override.yml
+phpstan.neon
+phpunit.xml
+vendor/
+build/

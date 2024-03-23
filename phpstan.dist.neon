@@ -1,0 +1,9 @@
+parameters:
+    level: max
+    tmpDir: build/phpstan
+    paths:
+        - src
+        - tests
+        - .psysh.php
+        - rector.php
+        - tombstone.php
