@@ -92,7 +92,7 @@ the email address of the person who added the tombstone and the recipient addres
 While code that is assumed to already be dead will _probably_ not be hit frequently,
 it's better to be safe than sorry, especially when paying for production log storage.
 
-To spamming logs and other side effects when a tombstone is hit in a loop or
+To reduce spamming logs and other side effects when a tombstone is hit in a loop or
 at high-frequency, this handler will limit the number of tombstone hits that are logged to
 one-per-request. More accurately -- important for non-HTTP contexts, like
 queue workers and cron-jobs -- one-per-instantiation of the configured
@@ -103,7 +103,7 @@ handler class. The underlying array is a key/value pairing of the tombstone's
 
 This handler will trigger a PHP error when a tombstone is hit, allowing your
 project's error handling system to log the tombstone hit as it would any other
-PHP error. By default, the error level is `E_USER_DEPRECATED`, but the other two
+PHP error. By default, the error level is `E_USER_DEPRECATED`, but the other three
 runtime user error levels (`E_USER_ERROR`, `E_USER_WARNING` and `E_USER_NOTICE`)
 are also supported.
 
