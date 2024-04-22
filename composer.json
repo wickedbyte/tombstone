@@ -2,7 +2,7 @@
     "name": "wickedbyte/tombstone",
     "description": "Basic implementation of the Tombstone pattern for PHP to uncover zombie code",
     "license": "MIT",
-    "type": "project",
+    "type": "library",
     "keywords": [
         "tombstone",
         "zombie code",
