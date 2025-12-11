@@ -15,7 +15,7 @@ jobs:
       - uses: ./.github/actions/ci-php-command-action
         with:
           display: Composer
-          command: composer validate && composer audit
+          composer_command: composer validate && composer audit
 
   phpcs:
     name: PHP_CodeSniffer Code Style Check
@@ -27,7 +27,7 @@ jobs:
       - uses: ./.github/actions/ci-php-command-action
         with:
           display: PHP_CodeSniffer
-          cache: build/phpcs
+          cache: build
           command: php vendor/bin/phpcs --parallel=$(nproc --ignore=2) --report=full
 
   phpstan:
