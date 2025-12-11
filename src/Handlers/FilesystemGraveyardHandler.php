@@ -15,7 +15,7 @@ class FilesystemGraveyardHandler implements TombstoneHandler
         \E_USER_DEPRECATED,
         \E_USER_NOTICE,
         \E_USER_WARNING,
-        \E_USER_ERROR,
+        \E_USER_ERROR, // kept for backwards compatibility, but not recommended, as it is deprecated in PHP 8.4
     ];
 
     public function __construct(
@@ -80,6 +80,9 @@ class FilesystemGraveyardHandler implements TombstoneHandler
 
     private function writeTombstoneFile(string $file_name, TombstoneActivated $tombstone): bool
     {
-        return (bool)\file_put_contents($file_name, \json_encode($tombstone, \JSON_THROW_ON_ERROR | \JSON_PRETTY_PRINT));
+        return (bool)\file_put_contents(
+            $file_name,
+            \json_encode($tombstone, \JSON_THROW_ON_ERROR | \JSON_PRETTY_PRINT),
+        );
     }
 }

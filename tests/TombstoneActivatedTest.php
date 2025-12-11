@@ -13,7 +13,7 @@ use WickedByte\Tombstone\StackFrame;
 use WickedByte\Tombstone\TombstoneActivated;
 
 #[CoversClass(TombstoneActivated::class)]
-class TombstoneActivatedTest extends TestCase
+final class TombstoneActivatedTest extends TestCase
 {
     use StubsTombstoneActivation;
 
@@ -121,7 +121,6 @@ class TombstoneActivatedTest extends TestCase
         self::assertTrue($tombstone->propagate);
         self::assertFalse($tombstone->isPropagationStopped());
     }
-
 
     #[Test]
     public function toArrayHasExpectedRepresentation(): void

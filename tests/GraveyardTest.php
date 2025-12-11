@@ -14,7 +14,7 @@ use WickedByte\Tombstone\TombstoneActivated;
 use WickedByte\Tombstone\TombstoneHandler;
 
 #[CoversClass(Graveyard::class)]
-class GraveyardTest extends TestCase
+final class GraveyardTest extends TestCase
 {
     protected function setUp(): void
     {

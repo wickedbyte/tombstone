@@ -13,7 +13,7 @@ class PhpErrorHandler implements TombstoneHandler
         \E_USER_DEPRECATED,
         \E_USER_NOTICE,
         \E_USER_WARNING,
-        \E_USER_ERROR,
+        \E_USER_ERROR, // keep for backwards compatibility, but not recommended, as it is deprecated in PHP 8.4
     ];
 
     public function __construct(protected readonly int $error_level = \E_USER_DEPRECATED)

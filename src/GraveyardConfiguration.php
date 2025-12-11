@@ -22,7 +22,9 @@ readonly class GraveyardConfiguration
     ) {
         $trace_depth > 0 || throw new \UnexpectedValueException('Trace depth must be greater than zero');
         foreach ($handlers as $handler) {
-            $handler instanceof TombstoneHandler || throw new \InvalidArgumentException('Handlers must implement TombstoneHandler');
+            $handler instanceof TombstoneHandler || throw new \InvalidArgumentException(
+                'Handlers must implement TombstoneHandler',
+            );
         }
     }
 }

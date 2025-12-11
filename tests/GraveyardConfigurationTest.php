@@ -18,7 +18,7 @@ use WickedByte\Tombstone\Handlers\PsrLoggerHandler;
 use WickedByte\Tombstone\RequestContextProvider;
 
 #[CoversClass(GraveyardConfiguration::class)]
-class GraveyardConfigurationTest extends TestCase
+final class GraveyardConfigurationTest extends TestCase
 {
     protected function setUp(): void
     {

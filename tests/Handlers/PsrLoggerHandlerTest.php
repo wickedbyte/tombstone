@@ -16,7 +16,7 @@ use WickedByte\Tombstone\Handlers\PsrLoggerHandler;
 use WickedByte\Tombstone\StackFrame;
 
 #[CoversClass(PsrLoggerHandler::class)]
-class PsrLoggerHandlerTest extends TestCase
+final class PsrLoggerHandlerTest extends TestCase
 {
     use StubsTombstoneActivation;
 
@@ -56,6 +56,6 @@ class PsrLoggerHandlerTest extends TestCase
     {
         $this->expectException(\UnexpectedValueException::class);
         $this->expectExceptionMessage('Invalid PSR Log Level: foo');
-        new PsrLoggerHandler($this->createMock(LoggerInterface::class), 'foo');
+        new PsrLoggerHandler($this->createStub(LoggerInterface::class), 'foo');
     }
 }

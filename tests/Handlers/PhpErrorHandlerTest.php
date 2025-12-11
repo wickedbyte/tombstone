@@ -14,7 +14,7 @@ use WickedByte\Tombstone\Handlers\PhpErrorHandler;
 use WickedByte\Tombstone\StackFrame;
 
 #[CoversClass(PhpErrorHandler::class)]
-class PhpErrorHandlerTest extends TestCase
+final class PhpErrorHandlerTest extends TestCase
 {
     use StubsTombstoneActivation;
 
@@ -31,7 +31,12 @@ class PhpErrorHandlerTest extends TestCase
             type: StackFrame::TYPE_OBJECT,
         ));
 
-        $previous_handler = \set_error_handler(static function (int $level, string $message, string $file, int $line): void {
+        $previous_handler = \set_error_handler(static function (
+            int $level,
+            string $message,
+            string $file,
+            int $line,
+        ): never {
             throw new \ErrorException($message, 0, $level, $file, $line);
         }, \E_USER_DEPRECATED | \E_USER_NOTICE | \E_USER_WARNING | \E_USER_ERROR);
 
@@ -58,7 +63,6 @@ class PhpErrorHandlerTest extends TestCase
         yield [\E_USER_DEPRECATED];
         yield [\E_USER_NOTICE];
         yield [\E_USER_WARNING];
-        yield [\E_USER_ERROR];
     }
 
     #[Test]
@@ -80,7 +84,6 @@ class PhpErrorHandlerTest extends TestCase
         yield [\E_CORE_WARNING];
         yield [\E_COMPILE_ERROR];
         yield [\E_COMPILE_WARNING];
-        yield [\E_STRICT];
         yield [\E_RECOVERABLE_ERROR];
         yield [\E_DEPRECATED];
         yield [\E_ALL];

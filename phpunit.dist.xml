@@ -8,6 +8,7 @@
          beStrictAboutCoverageMetadata="false"
          beStrictAboutOutputDuringTests="true"
          displayDetailsOnPhpunitDeprecations="true"
+         displayDetailsOnPhpunitNotices="true"
          failOnPhpunitDeprecation="true"
          failOnRisky="true"
          failOnWarning="true"

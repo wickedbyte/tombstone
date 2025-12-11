@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 use WickedByte\Tombstone\RequestContext;
 
 #[CoversClass(RequestContext::class)]
-class RequestContextTest extends TestCase
+final class RequestContextTest extends TestCase
 {
     #[Test]
     public function toArrayHasExpectedRepresentation(): void

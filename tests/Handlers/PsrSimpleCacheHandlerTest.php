@@ -14,7 +14,7 @@ use WickedByte\Tombstone\Handlers\PsrSimpleCacheHandler;
 use WickedByte\Tombstone\TombstoneActivated;
 
 #[CoversClass(PsrSimpleCacheHandler::class)]
-class PsrSimpleCacheHandlerTest extends TestCase
+final class PsrSimpleCacheHandlerTest extends TestCase
 {
     use StubsTombstoneActivation;
 
@@ -83,6 +83,6 @@ class PsrSimpleCacheHandlerTest extends TestCase
     {
         $this->expectException(\UnexpectedValueException::class);
         $this->expectExceptionMessage('TTL must be greater than or equal to zero');
-        new PsrSimpleCacheHandler($this->createMock(CacheInterface::class), -1);
+        new PsrSimpleCacheHandler($this->createStub(CacheInterface::class), -1);
     }
 }

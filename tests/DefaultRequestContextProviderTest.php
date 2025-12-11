@@ -12,14 +12,19 @@ use WickedByte\Tombstone\DefaultRequestContextProvider;
 use WickedByte\Tombstone\RequestContext;
 
 #[CoversClass(DefaultRequestContextProvider::class)]
-class DefaultRequestContextProviderTest extends TestCase
+final class DefaultRequestContextProviderTest extends TestCase
 {
+    /**
+     * @param array<string, string> $provider_context
+     */
     #[Test]
     #[DataProvider('providesTestCases')]
-    public function contextReturnsExpectedRequestContext(): void
-    {
-        $provider = new DefaultRequestContextProvider([]);
-        self::assertEquals(new RequestContext(), $provider->context());
+    public function contextReturnsExpectedRequestContext(
+        RequestContext $request_context,
+        array $provider_context,
+    ): void {
+        $provider = new DefaultRequestContextProvider($provider_context);
+        self::assertEquals($request_context, $provider->context());
     }
 
     public static function providesTestCases(): \Generator

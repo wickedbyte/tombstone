@@ -17,7 +17,7 @@ use WickedByte\Tombstone\StackFrame;
 use WickedByte\Tombstone\TombstoneException;
 
 #[CoversClass(FilesystemGraveyardHandler::class)]
-class FilesystemGraveyardHandlerTest extends TestCase
+final class FilesystemGraveyardHandlerTest extends TestCase
 {
     use StubsTombstoneActivation;
 
@@ -61,7 +61,6 @@ class FilesystemGraveyardHandlerTest extends TestCase
         yield [\E_CORE_WARNING];
         yield [\E_COMPILE_ERROR];
         yield [\E_COMPILE_WARNING];
-        yield [\E_STRICT];
         yield [\E_RECOVERABLE_ERROR];
         yield [\E_DEPRECATED];
         yield [\E_ALL];
@@ -198,7 +197,12 @@ class FilesystemGraveyardHandlerTest extends TestCase
             type: StackFrame::TYPE_OBJECT,
         ));
 
-        $previous_handler = \set_error_handler(static function (int $level, string $message, string $file, int $line): void {
+        $previous_handler = \set_error_handler(static function (
+            int $level,
+            string $message,
+            string $file,
+            int $line,
+        ): never {
             throw new \ErrorException($message, 0, $level, $file, $line);
         }, \E_USER_DEPRECATED | \E_USER_NOTICE | \E_USER_WARNING | \E_USER_ERROR);
 
@@ -211,7 +215,10 @@ class FilesystemGraveyardHandlerTest extends TestCase
             $handler($tombstone);
             self::fail('Expected error-as-exception to be thrown');
         } catch (\ErrorException $e) {
-            self::assertSame('filesystem graveyard handler error: directory not writable: ' . self::GRAVEYARD, $e->getMessage());
+            self::assertSame(
+                'filesystem graveyard handler error: directory not writable: ' . self::GRAVEYARD,
+                $e->getMessage(),
+            );
             self::assertSame($error_level, $e->getSeverity());
             self::assertTrue($tombstone->propagate);
         } finally {
@@ -224,6 +231,5 @@ class FilesystemGraveyardHandlerTest extends TestCase
         yield [\E_USER_DEPRECATED];
         yield [\E_USER_NOTICE];
         yield [\E_USER_WARNING];
-        yield [\E_USER_ERROR];
     }
 }

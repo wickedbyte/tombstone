@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Rector\CodeQuality\Rector\ClassMethod\LocallyCalledStaticMethodToNonStaticRector;
+use Rector\CodeQuality\Rector\Expression\InlineIfToExplicitIfRector;
 use Rector\CodeQuality\Rector\Identical\FlipTypeControlToUseExclusiveTypeRector;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodingStyle\Rector\Catch_\CatchExceptionNameMatchingTypeRector;
@@ -31,11 +32,12 @@ return RectorConfig::configure()
         rectorPreset: true,
         phpunitCodeQuality: true,
     )->withSkip([
-        ClosureToArrowFunctionRector::class,
-        FlipTypeControlToUseExclusiveTypeRector::class,
-        PreferPHPUnitThisCallRector::class,
-        LocallyCalledStaticMethodToNonStaticRector::class,
-        ExplicitBoolCompareRector::class,
-        NewlineAfterStatementRector::class,
         CatchExceptionNameMatchingTypeRector::class,
+        ClosureToArrowFunctionRector::class,
+        ExplicitBoolCompareRector::class,
+        FlipTypeControlToUseExclusiveTypeRector::class,
+        InlineIfToExplicitIfRector::class,
+        LocallyCalledStaticMethodToNonStaticRector::class,
+        NewlineAfterStatementRector::class,
+        PreferPHPUnitThisCallRector::class,
     ]);

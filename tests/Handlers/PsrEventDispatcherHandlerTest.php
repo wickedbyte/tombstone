@@ -12,7 +12,7 @@ use WickedByte\Tests\Tombstone\Fixtures\StubsTombstoneActivation;
 use WickedByte\Tombstone\Handlers\PsrEventDispatcherHandler;
 
 #[CoversClass(PsrEventDispatcherHandler::class)]
-class PsrEventDispatcherHandlerTest extends TestCase
+final class PsrEventDispatcherHandlerTest extends TestCase
 {
     use StubsTombstoneActivation;
 

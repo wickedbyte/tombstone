@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 use WickedByte\Tombstone\StackFrame;
 
 #[CoversClass(StackFrame::class)]
-class StackFrameTest extends TestCase
+final class StackFrameTest extends TestCase
 {
     #[Test]
     #[TestWith([StackFrame::TYPE_FUNCTION])]
@@ -22,9 +22,9 @@ class StackFrameTest extends TestCase
         $stack_frame = new StackFrame(
             file: 'file_value',
             line: 42,
+            function: 'function_value',
             class: 'class_value',
             type: $type,
-            function: 'function_value',
         );
 
         self::assertSame([

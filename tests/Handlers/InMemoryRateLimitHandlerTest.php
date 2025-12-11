@@ -12,7 +12,7 @@ use WickedByte\Tombstone\Handlers\InMemoryRateLimitHandler;
 use WickedByte\Tombstone\StackFrame;
 
 #[CoversClass(InMemoryRateLimitHandler::class)]
-class InMemoryRateLimitHandlerTest extends TestCase
+final class InMemoryRateLimitHandlerTest extends TestCase
 {
     use StubsTombstoneActivation;
 
