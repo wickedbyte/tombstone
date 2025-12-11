@@ -51,7 +51,7 @@ runs:
         mkdir -p build/composer
         docker run --rm \
           --user="$(id -u):$(id -g)" \
-          --pull=missing
+          --pull=missing \
           --env COMPOSER_CACHE_DIR="build/composer" \
           --volume ${{ github.workspace }}:/app \
           composer:latest \
@@ -64,7 +64,7 @@ runs:
         mkdir -p ${{ inputs.cache }}
         docker run --rm \
         --user="$(id -u):$(id -g)" \
-        --pull=missing
+        --pull=missing \
         --volume ${{ github.workspace }}:/app \
           php:${{ inputs.php-version }}-cli-alpine \
           ${{ inputs.command != '' }}
