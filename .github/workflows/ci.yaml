@@ -10,6 +10,8 @@ jobs:
     name: Composer Validation Check and Security Audit
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
       - uses: ./.github/actions/ci-php-command-action
         with:
           display: Composer
@@ -20,6 +22,8 @@ jobs:
     needs: composer
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
       - uses: ./.github/actions/ci-php-command-action
         with:
           display: PHP_CodeSniffer
@@ -31,6 +35,8 @@ jobs:
     needs: composer
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
       - uses: ./.github/actions/ci-php-command-action
         with:
           display: PHPStan
@@ -42,6 +48,8 @@ jobs:
     needs: composer
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
       - uses: ./.github/actions/ci-php-command-action
         with:
           display: Rector
@@ -56,6 +64,8 @@ jobs:
         php: ['8.2', '8.3', '8.4', '8.5' ]
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
       - uses: ./.github/actions/ci-php-command-action
         with:
           php-version: ${{ matrix.php }}
@@ -71,6 +81,8 @@ jobs:
         php: ['8.2', '8.3', '8.4', '8.5' ]
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
       - uses: ./.github/actions/ci-php-command-action
         with:
           php-version: ${{ matrix.php }}

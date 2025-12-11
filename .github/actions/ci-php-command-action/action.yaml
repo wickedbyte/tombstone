@@ -17,9 +17,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Checkout Code
-      uses: actions/checkout@v6
-
     - name: Set Up Cache for Composer and Vendor Files
       uses: actions/cache@v4
       with:
