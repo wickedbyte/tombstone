@@ -17,12 +17,20 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Set Up Cache for Composer and Vendor Files
+    - name: Set Up Build Cache for Composer
       uses: actions/cache@v4
       with:
-        path:
-          - build/composer
-          - vendor
+        path: build/composer
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}-${{ hashFiles('**/composer.lock') }}-${{ github.run_id }}
+        restore-keys:
+          - ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}-${{ hashFiles('**/composer.lock') }}
+          - ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          - ${{ runner.os }}-composer
+
+    - name: Set Up Vendor Cache for Composer
+      uses: actions/cache@v4
+      with:
+        path: vendor
         key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}-${{ hashFiles('**/composer.lock') }}-${{ github.run_id }}
         restore-keys:
           - ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}-${{ hashFiles('**/composer.lock') }}
