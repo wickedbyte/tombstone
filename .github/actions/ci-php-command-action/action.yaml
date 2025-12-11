@@ -22,20 +22,20 @@ runs:
       with:
         path: build/composer
         key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}-${{ hashFiles('**/composer.lock') }}-${{ github.run_id }}
-        restore-keys:
-          - ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}-${{ hashFiles('**/composer.lock') }}
-          - ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
-          - ${{ runner.os }}-composer
+        restore-keys: |
+          ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}-${{ hashFiles('**/composer.lock') }}
+          ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          ${{ runner.os }}-composer
 
     - name: Set Up Vendor Cache for Composer
       uses: actions/cache@v4
       with:
         path: vendor
         key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}-${{ hashFiles('**/composer.lock') }}-${{ github.run_id }}
-        restore-keys:
-          - ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}-${{ hashFiles('**/composer.lock') }}
-          - ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
-          - ${{ runner.os }}-composer
+        restore-keys: |
+          ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}-${{ hashFiles('**/composer.lock') }}
+          ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          ${{ runner.os }}-composer
 
     - if: ${{ inputs.cache != '' }}
       name: Set Up Cache for ${{ inputs.name }}
