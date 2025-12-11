@@ -1,42 +1,41 @@
 # syntax=docker/dockerfile:1.4
-FROM php:8.3-cli as php
+FROM php:8.5-cli as php
 WORKDIR /app
 ENV PATH "/app/bin:/app/vendor/bin:/app/build/composer/vendor/bin:$PATH"
 ENV COMPOSER_HOME "/app/build/composer"
+ARG USER_UID=1000
+ARG USER_GID=1000
 
 RUN <<-EOF
-  groupadd --gid 1000 dev;
-  useradd --system --create-home --uid 1000 --gid 1000 --shell /bin/bash dev;
-EOF
-
-RUN <<-EOF
+  groupadd --gid ${USER_GID} dev;
+  useradd --system --create-home --uid ${USER_UID} --gid ${USER_GID} --shell /bin/bash dev;
   apt-get update;
-  apt-get install -y \
-    apt-transport-https \
-    autoconf  \
-    build-essential \
+  apt-get install -y --no-install-recommends \
     curl \
     git \
     less \
-    libgmp-dev \
-    libicu-dev \
     libzip-dev \
-    libsodium-dev \
-    pkg-config \
     unzip \
-    vim-tiny \
     zip \
     zlib1g-dev;
   apt-get clean;
 EOF
 
-RUN <<-EOF
-  docker-php-ext-install -j$(nproc) bcmath gmp intl opcache zip;
-  pecl install xdebug;
-  docker-php-ext-enable xdebug;
-EOF
+COPY --link --from=ghcr.io/php/pie:bin /pie /usr/bin/pie
+COPY --link --from=composer /usr/bin/composer /usr/local/bin/composer
+COPY --link --from=composer /tmp/* /home/dev/.composer/
 
-COPY --link --from=composer/composer:latest-bin /composer /usr/bin/composer
-COPY --link settings.ini /usr/local/etc/php/conf.d/settings.ini
+RUN docker-php-ext-install zip
+RUN pie install xdebug/xdebug
+
+RUN <<EOF > /usr/local/etc/php/conf.d/settings.ini
+memory_limit=1G
+assert.exception=1
+error_reporting=E_ALL
+display_errors=1
+log_errors=on
+xdebug.log_level=0
+xdebug.mode=debug
+EOF
 
 USER dev
