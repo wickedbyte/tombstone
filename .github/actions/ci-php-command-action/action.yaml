@@ -57,11 +57,15 @@ runs:
           composer:latest \
           composer install --no-interaction --no-progress --prefer-dist --optimize-autoloader
 
+    - if: ${{ inputs.cache != '' }}
+      name: Make Command Cache Directory
+      shell: bash
+      run: mkdir -p ${{ inputs.cache }}
+
     - if: ${{ inputs.command != '' }}
       name: Run ${{ inputs.display }}
       shell: bash
       run: |
-        mkdir -p ${{ inputs.cache }}
         docker run --rm \
         --user="$(id -u):$(id -g)" \
         --pull=missing \
