@@ -1,0 +1,65 @@
+name: "Install PHP Dependencies"
+description: "Install PHP Dependencies"
+inputs:
+  php-version:
+    description: "PHP Version"
+    required: false
+    default: "8.5"
+  display:
+    description: "Vendor Script Name for Display, e.g. PHPUnit"
+    required: false
+  cache:
+    description: "Vendor Script Cache Path, e.g. build/phpstan"
+    required: false
+  command:
+    description: "Vendor Script Command, e.g. php vendor/bin/phpstan analyse --no-progress"
+    required: false
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout Code
+      uses: actions/checkout@v6
+
+    - name: Set Up Cache for Composer and Vendor Files
+      uses: actions/cache@v4
+      with:
+        path:
+          - build/composer
+          - vendor
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}-${{ hashFiles('**/composer.lock') }}-${{ github.run_id }}
+        restore-keys:
+          - ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}-${{ hashFiles('**/composer.lock') }}
+          - ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          - ${{ runner.os }}-composer
+
+    - if: ${{ inputs.cache != '' }}
+      name: Set Up Cache for ${{ inputs.name }}
+      uses: actions/cache@v4
+      with:
+        path: ${{ inputs.cache }}
+        key: ${{ runner.os }}-${{ inputs.php-version }}-${{ inputs.cache }}-${{ hashFiles('**/composer.lock') }}
+        restore-keys: ${{ runner.os }}-${{ inputs.php-version }}-${{ inputs.cache }}
+
+    - name: Install Composer Dependencies
+      shell: bash
+      run: |
+        mkdir -p build/composer
+        docker run --rm \
+          --user="$(id -u):$(id -g)" \
+          --pull=missing
+          --env COMPOSER_CACHE_DIR="build/composer" \
+          --volume ${{ github.workspace }}:/app \
+          composer:latest \
+          composer install --no-interaction --no-progress --prefer-dist --optimize-autoloader
+
+    - if: ${{ inputs.command != '' }}
+      name: Run ${{ inputs.display }}
+      shell: bash
+      run: |
+        mkdir -p ${{ inputs.cache }}
+        docker run --rm \
+        --user="$(id -u):$(id -g)" \
+        --pull=missing
+        --volume ${{ github.workspace }}:/app \
+          php:${{ inputs.php-version }}-cli-alpine \
+          ${{ inputs.command != '' }}
